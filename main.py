@@ -19,7 +19,8 @@ eng_freq = 4
 
 
 class CaesarForm(FlaskForm):
-    field_str = TextAreaField('Enter Text (Small Texts May Not Be Suitable for Decryption!)', validators=[DataRequired()])
+    field_str = TextAreaField('Enter Text (Small Texts May Not Be Suitable for Decryption!)',
+                              validators=[DataRequired()])
     language = SelectField('Alphabet', choices=['Russian', 'English'])
     option = SelectField('Option', choices=['Encrypt', 'Decrypt'])
     shift = IntegerField('Shift', validators=[Optional()])
@@ -37,7 +38,7 @@ def decrypt(alphabet, encrypt_str, freq, shift=None):
     if shift is not None:
         shifts = shift
     else:
-      shifts = alphabet.find(most_freq[0][0]) - freq
+        shifts = alphabet.find(most_freq[0][0]) - freq
     for letter in encrypt_str.lower():
         if letter not in alphabet:
             decrypt_str += letter
