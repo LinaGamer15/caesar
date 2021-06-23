@@ -19,8 +19,7 @@ eng_freq = 4
 
 
 class CaesarForm(FlaskForm):
-    field_str = TextAreaField('Enter Text (Small Texts May Not Be Suitable for Decryption!)',
-                              validators=[DataRequired()])
+    field_str = TextAreaField('Enter Text', validators=[DataRequired()])
     language = SelectField('Alphabet', choices=['Russian', 'English'])
     option = SelectField('Option', choices=['Encrypt', 'Decrypt'])
     shift = IntegerField('Shift', validators=[Optional()])
