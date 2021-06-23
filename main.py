@@ -87,9 +87,12 @@ def home():
         elif form.option.data == 'Decrypt':
             if form.field_str.data.lower()[0] not in lang(form.language.data):
                 flash('Please Change Language!')
-            else:
+            if not form.shift.data:
                 form.result.data = decrypt(lang(form.language.data), form.field_str.data.lower(),
                                            frequency(form.language.data))
+            elif form.shift.data:
+                form.result.data = decrypt(lang(form.language.data), form.field_str.data.lower(),
+                                           int(form.shift.data))
     return render_template('index.html', form=form)
 
 
