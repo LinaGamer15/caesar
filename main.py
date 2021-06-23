@@ -27,19 +27,22 @@ class CaesarForm(FlaskForm):
     submit = SubmitField('Do')
 
 
-def decrypt(alphabet, encrypt_str, freq):
+def decrypt(alphabet, encrypt_str, freq, shift=None):
     most_freq = cl.Counter(encrypt_str.lower()).most_common()
     for i in range(len(most_freq)):
         if most_freq[i][0] == ' ' or most_freq[i][0] == '-' or most_freq[i][0] == ',' or most_freq[i][0] == '.':
             del most_freq[i]
             break
     decrypt_str = ''
-    shift = alphabet.find(most_freq[0][0]) - freq
+    if shift is not None:
+        shifts = shift
+    else:
+      shifts = alphabet.find(most_freq[0][0]) - freq
     for letter in encrypt_str.lower():
         if letter not in alphabet:
             decrypt_str += letter
         else:
-            index = alphabet.find(letter) - shift
+            index = alphabet.find(letter) - shifts
             decrypt_str += alphabet[index]
     return decrypt_str
 
@@ -92,7 +95,7 @@ def home():
                                            frequency(form.language.data))
             elif form.shift.data:
                 form.result.data = decrypt(lang(form.language.data), form.field_str.data.lower(),
-                                           int(form.shift.data))
+                                           frequency(form.language.data), shift=int(form.shift.data))
     return render_template('index.html', form=form)
 
 
